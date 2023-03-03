@@ -21,7 +21,6 @@ filesRouter.post(
         (product) => product.id === productId
       );
       if (index !== -1) {
-        console.log(req.file);
         const originalFileExt = extname(req.file.originalname);
         const fileName = productId + originalFileExt;
         await saveProductImg(fileName, req.file.buffer);

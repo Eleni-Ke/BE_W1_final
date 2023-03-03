@@ -25,18 +25,40 @@ reviewsRouter.post(
       const newReview = {
         ...req.body,
         review_id: uniqid(),
-        productId: product_id,
+        product_id: product_id,
         createdAt: new Date(),
         updatedAt: new Date(),
       };
-      const allreviews = await getReviews();
-      allreviews.push(newReview);
-      await writeReviews(allreviews);
+      const allReviews = await getReviews();
+      allReviews.push(newReview);
+      await writeReviews(allReviews);
       res.status(201).send({ review_id: newReview.review_id });
     } catch (error) {
       next(error);
     }
   }
 );
+
+reviewsRouter.get("/:productsId/reviews", async (req, res, next) => {
+  try {
+    const productId = req.params.productsId;
+    const allReviews = await getReviews();
+    const productReviews = allReviews.filter((e) => e.product_id === productId);
+    res.send(productReviews);
+  } catch (error) {
+    next(error);
+  }
+});
+
+reviewsRouter.get("/:productsId/reviews/:reviewsId", async (req, res, next) => {
+  try {
+    const reviewId = req.params.reviewsId;
+    const allReviews = await getReviews();
+    const matchedReview = allReviews.find((e) => e.review_id === reviewId);
+    res.send(matchedReview);
+  } catch (error) {
+    next(error);
+  }
+});
 
 export default reviewsRouter;

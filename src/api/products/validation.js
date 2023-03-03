@@ -59,7 +59,7 @@ export const triggerBadRequest = (req, res, next) => {
 
   console.log(errors.array());
 
-  if (errors.isEmpty) {
+  if (errors.isEmpty()) {
     next();
   } else {
     next(
