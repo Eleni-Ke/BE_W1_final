@@ -1,17 +1,10 @@
 import Express from "express";
 import uniqid from "uniqid";
-import createHttpError from "http-errors";
 import {
   checkReviewSchema,
   triggerBadRequest,
 } from "../products/validation.js";
-import {
-  getProducts,
-  getReviews,
-  writeProducts,
-  writeReviews,
-} from "../../lib/fs-tools.js";
-import { check } from "express-validator";
+import { getReviews, writeReviews } from "../../lib/fs-tools.js";
 
 const reviewsRouter = Express.Router();
 

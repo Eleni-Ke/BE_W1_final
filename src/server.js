@@ -11,7 +11,7 @@ import {
 import reviewsRouter from "./api/review/index.js";
 
 const server = Express();
-const port = 3001;
+const port = 3002;
 
 server.use(cors());
 
