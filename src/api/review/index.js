@@ -61,4 +61,45 @@ reviewsRouter.get("/:productsId/reviews/:reviewsId", async (req, res, next) => {
   }
 });
 
+reviewsRouter.put(
+  "/:productsId/reviews/:reviewsId",
+  checkReviewSchema,
+  triggerBadRequest,
+  async (req, res, next) => {
+    try {
+      const reviewId = req.params.reviewsId;
+      const allReviews = await getReviews();
+      const index = allReviews.findIndex((e) => e.review_id === reviewId);
+      const oldReview = allReviews[index];
+      const updatedReview = {
+        ...oldReview,
+        ...req.body,
+        updatedAt: new Date(),
+      };
+      allReviews[index] = updatedReview;
+      await writeReviews(allReviews);
+      res.send(updatedReview);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+reviewsRouter.delete(
+  "/:productsId/reviews/:reviewsId",
+  async (req, res, next) => {
+    try {
+      const reviewId = req.params.reviewsId;
+      const allReviews = await getReviews();
+      const remainingReviews = allReviews.filter(
+        (e) => e.review_id !== reviewId
+      );
+      await writeReviews(remainingReviews);
+      res.status(204).send();
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 export default reviewsRouter;

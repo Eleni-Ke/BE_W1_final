@@ -64,7 +64,7 @@ export const triggerBadRequest = (req, res, next) => {
     next();
   } else {
     next(
-      createHttpError(400, "Errors during post validation", {
+      createHttpError(400, "Errors during post/put validation", {
         errorsList: errors.array(),
       })
     );
