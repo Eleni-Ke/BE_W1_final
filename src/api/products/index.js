@@ -1,9 +1,7 @@
 import Express from "express";
 import uniqid from "uniqid";
-import createHttpError from "http-errors";
 import { checkPoductsSchema, triggerBadRequest } from "./validation.js";
 import { getProducts, writeProducts } from "../../lib/fs-tools.js";
-import { check } from "express-validator";
 
 const productsRouter = Express.Router();
 
